@@ -1,84 +1,88 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+
 public class PlayerControl implements KeyListener{
 	
 	int PlayerXCoordinate;
 	int PlayerYCoordinate;
 	
+	//Create a new Player
 	public PlayerControl() {
-		//Create a new Player
-		
+
 	}
 	
 	public void SetRandomPlayerPosition() {
-		//Put player at random position on board
-		
-		PlayerXCoordinate = (int) (1 + (Math.random() * 10));
-		
+		//Put player at random position on board	
+		PlayerXCoordinate = (int) (1 + (Math.random() * 10));	
 		PlayerYCoordinate = (int) (1 + (Math.random() * 10));
 		
 	}
 	
-	
 	public void keyPressed(KeyEvent e) {
+		
+		System.out.println("Key Pressed");
 		
 		int key = e.getKeyCode();
 		
+		System.out.println(key);
+		
 		//Q - Up 1, Left 1
 		if (key == KeyEvent.VK_Q) {
-			setPlayerXCoordinate(getPlayerXCoordinate() - 1);
-			setPlayerYCoordinate(getPlayerYCoordinate() - 1);
+			PlayerXCoordinate --;
+			PlayerYCoordinate --;
 		}
 		
 		//W or Up Key - Up 1
 		if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
-			setPlayerYCoordinate(getPlayerYCoordinate() - 1);
+			PlayerYCoordinate --;
 		}
 		
 		//E - Up 1, Right 1
 		if (key == KeyEvent.VK_E) {
-			setPlayerXCoordinate(getPlayerXCoordinate() + 1);
-			setPlayerYCoordinate(getPlayerYCoordinate() - 1);
+			PlayerXCoordinate ++;
+			PlayerYCoordinate --;
 		}
 		
 		//A or Left Key - Left 1
 		if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
-			setPlayerXCoordinate(getPlayerXCoordinate() - 1);
+			PlayerXCoordinate --;
 		}
 		
 		//S - Stay
 		if (key == KeyEvent.VK_S) {
-			setPlayerXCoordinate(getPlayerXCoordinate());
-			setPlayerYCoordinate(getPlayerYCoordinate());
+			PlayerXCoordinate = PlayerXCoordinate;
+			PlayerYCoordinate = PlayerYCoordinate;
 		}
 		
 		//D or Right Key - Right 1
 		if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
-			setPlayerXCoordinate(getPlayerXCoordinate() + 1);
+			PlayerXCoordinate ++;
 		}
 		
 		//Z - Down 1, Left 1
 		if (key == KeyEvent.VK_Z) {
-			setPlayerXCoordinate(getPlayerXCoordinate() - 1);
-			setPlayerYCoordinate(getPlayerYCoordinate() + 1);
+			PlayerXCoordinate --;
+			PlayerYCoordinate ++;
 		}
 		
 		//X or Down Key - Down 1
 		if (key == KeyEvent.VK_X || key == KeyEvent.VK_DOWN) {
-			setPlayerYCoordinate(getPlayerYCoordinate() + 1);
+			PlayerYCoordinate ++;
 		}
 		
 		//C - Down 1, Right 1
 		if (key == KeyEvent.VK_C) {
-			setPlayerXCoordinate(getPlayerXCoordinate() + 1);
-			setPlayerYCoordinate(getPlayerYCoordinate() + 1);
+			PlayerXCoordinate ++;
+			PlayerYCoordinate ++;
 		}
 		
 		//J - Jump to random position
 		if (key == KeyEvent.VK_J) {
 			SetRandomPlayerPosition();
 		}
+		
+		System.out.println(getPlayerXCoordinate() + "," + getPlayerYCoordinate());
 
 	}
 	
