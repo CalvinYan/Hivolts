@@ -37,145 +37,42 @@ public class Mho {
 		} 
 		//If Mho is not directly vertical or horizontal to Mho
 		else {
-			//If Mho is down and to the right of the player, move up and to the left
-			if(currentX > playerX && currentY > playerY && (board.isTaken(currentX-1, currentY-1)) == false) {
-				currentX--;
-				currentY--;
-			}
-			//If Mho is up and to the right of the player, move down and to the left
-			else if(currentX > playerX && currentY < playerY && (board.isTaken(currentX-1, currentY+1)) == false) {
-				currentX--;
-				currentY++;
-			}
-			//If Mho is down and to the left of the player, move up and to the right
-			else if(currentX < playerX && currentY > playerY && (board.isTaken(currentX+1, currentY-1)) == false) {
-				currentX++;
-				currentY--;
-			}
-			//If Mho is up and to the left of the player, move down and to the right
-			else if(currentX <  playerX && currentY < playerY && (board.isTaken(currentX+1, currentY+1)) == false) {
-				currentX++;
-				currentY++;
-			}
-			/* If Mho is down and to the right of the player, and the diagonal space is 
-			 * taken, move horizontally or vertically based on farther distance.
+			// Horizontal and vertical distance from player to mho
+			int xDist = playerX - currentX, yDist = playerY - currentY;
+			// Optimal diagonal direction to move in (both values are either 1 or -1)
+			int xDirection = xDist / Math.abs(xDist), yDirection = yDist / Math.abs(yDist);
+			// Coordinates of new diagonal position
+			int[] diagPos = {currentX + xDirection, currentY + yDirection};
+			/* If diagonal movement is impossible, move horizontally if
+			 * horizontal distance is greater than or equal to vertical distance,
+			 * and vertically otherwise.
 			 */
-			else if(currentX > playerX && currentY > playerY) {
-				if(currentX-playerX < currentY-playerY && (board.isTaken(currentX, currentY-1)) == false) {
-					currentY--;
-				} else if(currentX-playerX >= currentY-playerY && (board.isTaken(currentX-1, currentY)) == false) {
-					currentX--;
-				}
+			int[] orthogonal = new int[2];
+			if (Math.abs(xDist) >= Math.abs(yDist)) {
+				orthogonal[0] = xDirection;
+			} else {
+				orthogonal[1] = yDirection;
 			}
-			/* If Mho is down and to the left of the player, and the diagonal space 
-			 * is taken, move horizontally or vertically based on farther distance.
-			 */
-			else if(currentX < playerX && currentY > playerY) {
-				if(playerX-currentX < currentY-playerY && (board.isTaken(currentX, currentY-1)) == false) {
-					currentY--;
-				} else if(playerX-currentX >= currentY-playerY && (board.isTaken(currentX+1, currentY)) == false) {
-					currentX++;
-				}
-			}
-			/* If Mho is up and to the right of the player, and the diagonal space is 
-			 * taken, move horizontally or vertically based on farther distance.
-			 */
-			else if(currentX > playerX && currentY < playerY) {
-				if(currentX-playerX < playerY-currentY && (board.isTaken(currentX, currentY+1)) == false) {
-					currentY++;
-				} else if(currentX-playerX >= playerY-currentY && (board.isTaken(currentX-1, currentY)) == false) {
-					currentX--;
-				}
-			}
-			/* If Mho is up and to the left of the player, and the diagonal space
-			 * is taken, move horizontally or vertically based on farther distance.
-			 */
-			else if(currentX < playerX && currentY < playerY) {
-				if(playerX-currentX < playerY-currentY && (board.isTaken(currentX, currentY+1)) == false) {
-					currentY++;
-				} else if(playerX-currentX >= playerY-currentY && (board.isTaken(currentX+1, currentY)) == false) {
-					currentX++;
-				}
-			}
+			// Coordinates of new orthogonal position
+			int[] orthoPos = {currentX + orthogonal[0], currentY + orthogonal[1]};
 			
-			
-			
-			/* If all above options are not executed, the code will attempt to have the
-			*  the mho move onto an electric fence in the same order of priority.
-			*/
-			
-			
-			
-			// If Mho is down and to the right of the player, move up and to the left
-			else if(currentX > playerX && currentY > playerY && (board.isMho(currentX-1, currentY-1)) == false) {
-				currentX--;
-				currentY--;
-			}
-			//If Mho is up and to the right of the player, move down and to the left
-			else if(currentX > playerX && currentY < playerY && (board.isMho(currentX-1, currentY+1)) == false) {
-				currentX--;
-				currentY++;
-			}
-			//If Mho is down and to the left of the player, move up and to the right
-			else if(currentX < playerX && currentY > playerY && (board.isMho(currentX+1, currentY-1)) == false) {
-				currentX++;
-				currentY--;
-			}
-			//If Mho is up and to the left of the player, move down and to the right
-			else if(currentX <  playerX && currentY < playerY && (board.isMho(currentX+1, currentY+1)) == false) {
-				currentX++;
-				currentY++;
-			}
-			/* If Mho is down and to the right of the player, and the diagonal space is 
-			 * taken, move horizontally or vertically based on farther distance.
-			 */
-			else if(currentX > playerX && currentY > playerY) {
-				if(currentX-playerX < currentY-playerY && (board.isMho(currentX-1, currentY)) == false) {
-					currentY--;
-				} else if(currentX-playerX >= currentY-playerY && (board.isMho(currentX, currentY-1)) == false) {
-					currentX--;
-				}
-			}
-			/* If Mho is down and to the left of the player, and the diagonal space 
-			 * is taken, move horizontally or vertically based on farther distance.
-			 */
-			else if(currentX < playerX && currentY > playerY) {
-				if(playerX-currentX < currentY-playerY && (board.isMho(currentX, currentY-1)) == false) {
-					currentY--;
-				} else if(playerX-currentX >= currentY-playerY && (board.isMho(currentX+1, currentY)) == false) {
-					currentX++;
-				}
-			}
-			/* If Mho is up and to the right of the player, and the diagonal space is 
-			 * taken, move horizontally or vertically based on farther distance.
-			 */
-			else if(currentX > playerX && currentY < playerY) {
-				if(currentX-playerX < playerY-currentY && (board.isMho(currentX, currentY+1)) == false) {
-					currentY++;
-				} else if(currentX-playerX >= playerY-currentY && (board.isMho(currentX-1, currentY)) == false) {
-					currentX--;
-				}
-			}
-			/* If Mho is up and to the left of the player, and the diagonal space
-			 * is taken, move horizontally or vertically based on farther distance.
-			 */
-			else if(currentX < playerX && currentY < playerY) {
-				if(playerX-currentX < playerY-currentY && (board.isMho(currentX, currentY+1)) == false) {
-					currentY++;
-				} else if(playerX-currentX >= playerY-currentY && (board.isMho(currentX+1, currentY)) == false) {
-					currentX++;
-				}
-			}
-			/* If Mho cannot move towards player due to being blocked by other Mho,
-			 * the mho will not move.
-			 */
-			else {
-				;
+			if (!board.isTaken(diagPos[0], diagPos[1])) {
+				// Move diagonally if landing on an empty space
+				currentX = diagPos[0];
+				currentY = diagPos[1];
+			} else if (!board.isTaken(orthoPos[0], orthoPos[1])) {
+				// Move orthogonally if landing on an empty space
+				currentX = orthoPos[0];
+				currentY = orthoPos[1];				
+			} else if (!board.isMho(diagPos[0], diagPos[1])) {
+				// Move diagonally if landing on a fence
+				currentX = diagPos[0];
+				currentY = diagPos[1];
+			} else if (!board.isMho(orthoPos[0], orthoPos[1])) {
+				// Move orthogonally if landing on a fence
+				currentX = orthoPos[0];
+				currentY = orthoPos[1];	
 			}
 		}
-		
-		
-		
-		
 	}
 }
