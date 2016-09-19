@@ -24,6 +24,9 @@ public class HivoltsBoard extends JFrame {
 	// Instance of the hivolts applet
 	Hivolts hivolts;
 	
+	// Is the player alive?
+	private boolean alive = true;
+	
 	public HivoltsBoard() {
 		setPreferredSize(new Dimension(500, 500));
 		pack();
@@ -33,24 +36,23 @@ public class HivoltsBoard extends JFrame {
 	
 	/**
 	 *  Tell the program if the game has been won or lost.
-	 *  The applet then reacts accordingly.
+	 *  The applet then displays a message (or two messages if the player
+	 *  jumped onto a mho) and resets the game.
 	 */
-	public void setStatus(Status status) {
+	public void setStatus(Status status, boolean jumped) {
 		print();
+		if (jumped) System.out.println("You jumped onto a mho!");
 		switch (status) {
 		case LOSE:
 			System.out.println("LOL FUCKING LOSER");
+			alive = false;
 			break;
 		case WIN:
 			System.out.println("WOW WHAT A TRYHARD");
 			break;
 		}
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		init();
+		System.out.println("Play again? Press R to restart, ESC to exit");
+		addKeyListener(pc);
 	}
 	
 	/**
@@ -96,11 +98,22 @@ public class HivoltsBoard extends JFrame {
 		return board[y][x];
 	}
 	
+	/**
+	 * Is the player still alive?
+	 * @return whether or not the player is alive
+	 */
+	public boolean playerAlive() { return alive; }
+	
 	public void keyPressed(KeyEvent e) {
 		removeKeyListener(pc);
 		if (isTaken(pc.PlayerXCoordinate, pc.PlayerYCoordinate)) {
 			// Player moved onto a fence or mho
-			setStatus(Status.LOSE);
+			if (e.getKeyChar() == 'j') {
+				// Display a special message if the player jumps on a mho
+				setStatus(Status.LOSE, true);
+				return;
+			}
+			setStatus(Status.LOSE, false);
 			return;
 		}
 		board[pc.PlayerYCoordinate][pc.PlayerXCoordinate] = "+";
@@ -112,6 +125,7 @@ public class HivoltsBoard extends JFrame {
 		}
 		// Player moves again after a jump
 		if (e.getKeyChar() == 'j') {
+			// Check if player jumped on a Mho
 			playerTurn();
 		} else {
 			mhosTurn();
@@ -119,7 +133,12 @@ public class HivoltsBoard extends JFrame {
 	}
 	
 	// Creates and positions all objects on the board
-	private void init() {
+	public void init() {
+		// Remove key listener if game was reset
+		removeKeyListener(pc);
+		
+		alive = true;
+		
 		mhosLeft = 12;
 		
 		// Create border fences and set inside cells to blank spaces
@@ -189,13 +208,13 @@ public class HivoltsBoard extends JFrame {
 			}
 			if (pc.PlayerXCoordinate == m.currentX && pc.PlayerYCoordinate == m.currentY) {
 				// Player is RIP
-				setStatus(Status.LOSE);
+				setStatus(Status.LOSE, false);
 				return;
 			}
 		}
 		print();
 		if (mhosLeft == 0){
-			setStatus(Status.WIN);
+			setStatus(Status.WIN, false);
 			return;
 		}
 		playerTurn();

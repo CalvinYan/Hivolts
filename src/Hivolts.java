@@ -1,5 +1,10 @@
-import javax.swing.JApplet;
+import java.awt.Image;
+import java.io.File;
 
-public class Hivolts extends JApplet {
+import javax.imageio.ImageIO;
 
+import javax.swing.JFrame;
+
+public class Hivolts extends JFrame {
+	
 }
