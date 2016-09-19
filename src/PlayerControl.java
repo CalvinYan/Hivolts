@@ -34,6 +34,8 @@ public class PlayerControl implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		
+		board.board[PlayerYCoordinate][PlayerXCoordinate] = " ";
+		
 		// Movement keys - only work if the player is alive
 		if (movementKeys.indexOf(e.getKeyChar()) != -1 && board.playerAlive()) {
 			//Q - Up 1, Left 1

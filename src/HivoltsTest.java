@@ -1,10 +1,10 @@
 
 public class HivoltsTest {
 	
-	private static HivoltsBoard board;
+	private static Hivolts game;
 	
 	public static void main(String[] args) {
-		board = new HivoltsBoard();
+		game = new Hivolts();
 	}
 
 }

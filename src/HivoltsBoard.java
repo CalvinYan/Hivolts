@@ -3,11 +3,13 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
-public class HivoltsBoard extends JFrame {
+public class HivoltsBoard{
 	
 	private enum Status {
 		LOSE, WIN;
 	}
+	
+	Hivolts game;
 	
 	// Tracks the location of all objects in the game
 	String[][] board = new String[12][12];
@@ -27,10 +29,8 @@ public class HivoltsBoard extends JFrame {
 	// Is the player alive?
 	private boolean alive = true;
 	
-	public HivoltsBoard() {
-		setPreferredSize(new Dimension(500, 500));
-		pack();
-		setVisible(true);
+	public HivoltsBoard(Hivolts game) {
+		this.game = game;
 		init();
 	}
 	
@@ -52,7 +52,7 @@ public class HivoltsBoard extends JFrame {
 			break;
 		}
 		System.out.println("Play again? Press R to restart, ESC to exit");
-		addKeyListener(pc);
+		game.addKeyListener(pc);
 	}
 	
 	/**
@@ -105,7 +105,8 @@ public class HivoltsBoard extends JFrame {
 	public boolean playerAlive() { return alive; }
 	
 	public void keyPressed(KeyEvent e) {
-		removeKeyListener(pc);
+		game.removeKeyListener(pc);
+		board[pc.PlayerYCoordinate][pc.PlayerXCoordinate] = " ";
 		if (isTaken(pc.PlayerXCoordinate, pc.PlayerYCoordinate)) {
 			// Player moved onto a fence or mho
 			if (e.getKeyChar() == 'j') {
@@ -135,7 +136,7 @@ public class HivoltsBoard extends JFrame {
 	// Creates and positions all objects on the board
 	public void init() {
 		// Remove key listener if game was reset
-		removeKeyListener(pc);
+		game.removeKeyListener(pc);
 		
 		alive = true;
 		
@@ -174,13 +175,13 @@ public class HivoltsBoard extends JFrame {
 		board[pc.PlayerYCoordinate][pc.PlayerXCoordinate] = "+";
 		
 		print();
+		game.repaint();
 		// Start the game
 		playerTurn();
 	}
 	
 	private void playerTurn() {
-		board[pc.PlayerYCoordinate][pc.PlayerXCoordinate] = " ";
-		addKeyListener(pc);
+		game.addKeyListener(pc);
 	}
 	
 	private void mhosTurn() {
@@ -227,6 +228,7 @@ public class HivoltsBoard extends JFrame {
 	
 	// Prints out the state of the board
 	private void print() {
+		game.repaint();
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 12; j++) {
 				
