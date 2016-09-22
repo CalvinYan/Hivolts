@@ -106,7 +106,6 @@ public class HivoltsBoard{
 	
 	public void keyPressed(KeyEvent e) {
 		game.removeKeyListener(pc);
-		board[pc.PlayerYCoordinate][pc.PlayerXCoordinate] = " ";
 		if (isTaken(pc.PlayerXCoordinate, pc.PlayerYCoordinate)) {
 			// Player moved onto a fence or mho
 			if (e.getKeyChar() == 'j') {
@@ -120,7 +119,7 @@ public class HivoltsBoard{
 		board[pc.PlayerYCoordinate][pc.PlayerXCoordinate] = "+";
 		print();
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(100);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}

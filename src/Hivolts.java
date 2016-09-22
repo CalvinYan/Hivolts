@@ -5,13 +5,10 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 public class Hivolts extends JFrame {
         
 	private HivoltsBoard hb;
 	private String[][] board;
-	
-    private JPanel panel;
     private BufferedImage player, mho, fence;
     
     private static final int LENGTH = 90;
@@ -21,43 +18,26 @@ public class Hivolts extends JFrame {
     }
     
     public void init() {
-        //add(panel);
         setResizable(false);
         setPreferredSize(new Dimension(LENGTH * 12, LENGTH * 12));
         setBackground(Color.WHITE);
         pack();
         hb = new HivoltsBoard(this);
         setVisible(true);
-    }
-    
-    public void updateBoard(int[][] oldMhoPos, int[][] newMhoPos, int[] oldPlayerPos, int[] newPlayerPos) {
-    	Graphics g = getGraphics();
-    	for (int[] o : oldMhoPos) {
-    		int xPos = o[0], yPos = o[1];
-    		int xCoord = LENGTH * xPos, yCoord = LENGTH * yPos;
-    		g.clearRect(xCoord, yCoord, LENGTH, LENGTH);
-    	}
-    	for (int[] n : newMhoPos) {
-    		int xPos = n[0], yPos = n[1];
-    		int xCoord = LENGTH * xPos, yCoord = LENGTH * yPos;
-    		g.drawImage(mho, xCoord, yCoord, LENGTH, LENGTH, null);
-    	}
-    	int oldPlayerX = oldPlayerPos[0]. oldPlayerY = oldPlayerPos
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
     public void paint(Graphics g) {
-    	System.out.println("Begin");
-    	panel = new JPanel();
         board = hb.board;
         int xPos = 0, yPos = 0;
         try {
-        	player = ImageIO.read(new File("trump player.jpg"));
-            mho = ImageIO.read(new File("clinton mho.jpg"));
-            fence = ImageIO.read(new File("troll wall.jpg"));
+        	player = ImageIO.read(new File("trump.jpg"));
+            mho = ImageIO.read(new File("clinton.jpg"));
+            fence = ImageIO.read(new File("troll.jpg"));
         } catch (IOException e) {
             System.out.println("ABORT ABORT ABORT");
             e.printStackTrace();
-        }       
+        }
         
         for(yPos = 0; yPos < 12; yPos++) {
             for(xPos = 0; xPos < 12; xPos++) {
