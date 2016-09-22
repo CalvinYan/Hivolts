@@ -1,4 +1,6 @@
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.io.File;
@@ -11,8 +13,11 @@ public class Hivolts extends JFrame {
 	private HivoltsBoard hb;
 	private String[][] board;
 	
-    private JPanel panel;
-    private BufferedImage player, mho, fence;
+	private JPanel panel = new JPanel();
+	
+	private JLabel[][] images = new JLabel[12][12];
+	
+    private ImageIcon player, fence, blank, mho;
     
     private static final int LENGTH = 90;
     
@@ -21,16 +26,17 @@ public class Hivolts extends JFrame {
     }
     
     public void init() {
-        //add(panel);
-        setResizable(false);
-        setPreferredSize(new Dimension(LENGTH * 12, LENGTH * 12));
-        setBackground(Color.WHITE);
-        pack();
+    	loadImages();
+        initDisplay();
         hb = new HivoltsBoard(this);
+        pack();
         setVisible(true);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        updateBoard();
+        System.out.println(getSize());
     }
     
-    public void updateBoard(int[][] oldMhoPos, int[][] newMhoPos, int[] oldPlayerPos, int[] newPlayerPos) {
+    /*public void updateBoard() {
     	Graphics g = getGraphics();
     	for (int[] o : oldMhoPos) {
     		int xPos = o[0], yPos = o[1];
@@ -43,17 +49,14 @@ public class Hivolts extends JFrame {
     		g.drawImage(mho, xCoord, yCoord, LENGTH, LENGTH, null);
     	}
     	int oldPlayerX = oldPlayerPos[0]. oldPlayerY = oldPlayerPos
-    }
+    }*/
     
     public void paint(Graphics g) {
     	System.out.println("Begin");
-    	panel = new JPanel();
-        board = hb.board;
+        /*board = hb.board;
         int xPos = 0, yPos = 0;
         try {
-        	player = ImageIO.read(new File("trump player.jpg"));
-            mho = ImageIO.read(new File("clinton mho.jpg"));
-            fence = ImageIO.read(new File("troll wall.jpg"));
+        	
         } catch (IOException e) {
             System.out.println("ABORT ABORT ABORT");
             e.printStackTrace();
@@ -73,7 +76,60 @@ public class Hivolts extends JFrame {
                 	g.drawImage(mho, xCoord, yCoord, LENGTH, LENGTH, null);
                 }
             }
-        }
-        
+        }*/
     }
+    
+    public void updateBoard() {
+    	if (hb == null) return;
+    	System.out.println(this.getLayout());
+    	board = hb.board;
+    	for (int i = 0; i < 12; i++) {
+    		for (int j = 0; j < 12; j++) {
+    			if (images[i][j] == null) {
+    				images[i][j] = new JLabel("What");
+    			}
+    			JLabel image = images[i][j];
+    			//image.setForeground(Color.BLACK);
+    			//System.out.println(image.getForeground());
+    			switch(board[i][j]) {
+    			case ("+"):
+    				image.setIcon(player);
+    				break;
+    			case ("F"):
+    				image.setIcon(fence);
+    				break;
+    			case (" "):
+    				image.setIcon(blank);
+    				break;
+    			default:
+    				image.setIcon(mho);
+    				break;
+    			}
+    			image.setSize(LENGTH, LENGTH);
+    			//System.out.println(image.getAlignmentX());
+    			add(image);
+    		}
+    	}
+    	pack();
+    	validate();
+    	setVisible(true);
+    }
+    
+    private void loadImages() {
+    	System.out.println(System.getProperty("java.class.path"));
+    	player = new ImageIcon("trump.jpg");
+    	fence = new ImageIcon("troll.jpg");
+    	blank = new ImageIcon("blank.jpg");
+        mho = new ImageIcon("clinton.jpg");
+    }
+    
+    private void initDisplay() {
+    	setResizable(false);
+        setPreferredSize(new Dimension(LENGTH * 12, LENGTH * 12));
+        //setBackground(Color.BLACK);
+        setLayout(new GridLayout(12, 12));
+    }
+    
+    
+    
 }

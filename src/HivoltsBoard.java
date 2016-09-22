@@ -106,7 +106,6 @@ public class HivoltsBoard{
 	
 	public void keyPressed(KeyEvent e) {
 		game.removeKeyListener(pc);
-		board[pc.PlayerYCoordinate][pc.PlayerXCoordinate] = " ";
 		if (isTaken(pc.PlayerXCoordinate, pc.PlayerYCoordinate)) {
 			// Player moved onto a fence or mho
 			if (e.getKeyChar() == 'j') {
@@ -175,7 +174,7 @@ public class HivoltsBoard{
 		board[pc.PlayerYCoordinate][pc.PlayerXCoordinate] = "+";
 		
 		print();
-		game.repaint();
+		game.updateBoard();
 		// Start the game
 		playerTurn();
 	}
@@ -214,6 +213,7 @@ public class HivoltsBoard{
 			}
 		}
 		print();
+		game.updateBoard();
 		if (mhosLeft == 0){
 			setStatus(Status.WIN, false);
 			return;
@@ -228,7 +228,6 @@ public class HivoltsBoard{
 	
 	// Prints out the state of the board
 	private void print() {
-		game.repaint();
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 12; j++) {
 				
