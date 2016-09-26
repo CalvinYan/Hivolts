@@ -2,6 +2,7 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class HivoltsBoard{
 	
@@ -41,17 +42,23 @@ public class HivoltsBoard{
 	 */
 	public void setStatus(Status status, boolean jumped) {
 		print();
-		if (jumped) System.out.println("You jumped onto a mho!");
+		
 		switch (status) {
 		case LOSE:
-			System.out.println("LOL FUCKING LOSER");
-			alive = false;
-			break;
+			
+			if (jumped) {
+				JOptionPane.showMessageDialog(null,  "Jump harder you slut" +  "\nPlay again? Press R to restart, ESC to exit");
+				break;
+			} else {
+				alive = false;
+				JOptionPane.showMessageDialog(null,  "YM LOL Fucking Loser" +  "\nPlay again? Press R to restart, ESC to exit");
+				break;
+			}
+			
 		case WIN:
-			System.out.println("WOW WHAT A TRYHARD");
+			JOptionPane.showMessageDialog(null,  "Damn Daniel, back at it again with the dank memes" +  "\nPlay again? Press R to restart, ESC to exit");
 			break;
 		}
-		System.out.println("Play again? Press R to restart, ESC to exit");
 		game.addKeyListener(pc);
 	}
 	
@@ -231,9 +238,9 @@ public class HivoltsBoard{
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 12; j++) {
 				
-				System.out.print(board[i][j]);
+				//System.out.print(board[i][j]);
 			}
-			System.out.println();
+			//System.out.println();
 		}
 	}
 	
