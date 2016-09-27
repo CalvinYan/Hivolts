@@ -47,16 +47,16 @@ public class HivoltsBoard{
 		case LOSE:
 			
 			if (jumped) {
-				JOptionPane.showMessageDialog(null,  "Jump harder you slut" +  "\nPlay again? Press R to restart, ESC to exit");
+				JOptionPane.showMessageDialog(null,  "Donald, it's good to be with you. \n -Hillary Clinton" +  "\nYou had an unfortunate encounter with a Clinton.  Play again? Press R to restart, ESC to exit");
 				break;
 			} else {
 				alive = false;
-				JOptionPane.showMessageDialog(null,  "YM LOL Fucking Loser" +  "\nPlay again? Press R to restart, ESC to exit");
+				JOptionPane.showMessageDialog(null,  "Well Donald, I know you live in your own reality. \n -Hillary Clinton" +  "\nPlay again? Press R to restart, ESC to exit");
 				break;
 			}
 			
 		case WIN:
-			JOptionPane.showMessageDialog(null,  "Damn Daniel, back at it again with the dank memes" +  "\nPlay again? Press R to restart, ESC to exit");
+			JOptionPane.showMessageDialog(null,  "I have a winning temperament. \n -Donald Trump" +  "\nPlay again? Press R to restart, ESC to exit");
 			break;
 		}
 		game.addKeyListener(pc);
