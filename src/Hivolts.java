@@ -6,7 +6,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 public class Hivolts extends JFrame {
-        
+	
+	public static void main(String[] args) {
+		Hivolts game = new Hivolts();
+	}
+	
+	
 	private HivoltsBoard hb;
 	private String[][] board;
     private BufferedImage player, mho, fence;
